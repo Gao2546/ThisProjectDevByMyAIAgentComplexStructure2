@@ -1,0 +1,92 @@
+
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: sensor_data_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: sensor_data_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+    networks:
+      - sensor_network
+
+  # Adminer for database management
+  adminer:
+    image: adminer
+    container_name: sensor_data_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - sensor_network
+    depends_on:
+      - postgres
+
+  # Data Pipeline Service
+  data-pipeline:
+    build:
+      context: ..
+      dockerfile: ./data-pipeline/Dockerfile
+    container_name: sensor_data_pipeline
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=sensor_data_db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - NODE_ENV=development
+      #production
+    networks:
+      - sensor_network
+    depends_on:
+      - postgres
+    volumes:
+      - ../data-pipeline/logs:/app/logs
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: sensor_data_frontend
+    restart: always
+    ports:
+      - "3002:3000"
+    networks:
+      - sensor_network
+    depends_on:
+      - data-pipeline
+
+  # Ollama for LLM services
+  ollama:
+    image: ollama/ollama:latest
+    container_name: sensor_data_ollama
+    restart: always
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - sensor_network
+
+networks:
+  sensor_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  ollama_data:
+
