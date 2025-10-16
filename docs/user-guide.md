@@ -10,7 +10,7 @@ This guide provides instructions for users to interact with the Manufacturing Pi
 To access the Manufacturing Pipeline Dashboard:
 
 1. Open your web browser
-2. Navigate to the dashboard URL (typically http://localhost:3000)
+2. Navigate to the dashboard URL (typically http://localhost:3002)
 3. The dashboard will load automatically, displaying real-time sensor data and predictions
 
 ### Dashboard Overview

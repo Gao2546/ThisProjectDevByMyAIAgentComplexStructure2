@@ -77,10 +77,10 @@ This system provides end-to-end monitoring for manufacturing equipment in semico
    ```
 
 3. Access the components:
-   - Dashboard: http://localhost:3000
+   - Dashboard: http://localhost:3002
    - API: http://localhost:3001
    - Database Admin: http://localhost:8080
-   - Ollama: http://localhost:11434
+   - Ollama: http://localhost:11435
 
 ### Configuration
 

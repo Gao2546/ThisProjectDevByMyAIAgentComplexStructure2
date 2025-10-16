@@ -57,8 +57,8 @@ The Manufacturing Pipeline system consists of the following components:
 4. Verify the deployment:
    - Data Pipeline API: http://localhost:3001/health
    - Database Adminer: http://localhost:8080/
-   - Frontend Dashboard: http://localhost:3000/
-   - Ollama API: http://localhost:11434/
+   - Frontend Dashboard: http://localhost:3002/
+   - Ollama API: http://localhost:11435/
 
 ### Configuration
 
@@ -69,7 +69,7 @@ The data pipeline service can be configured using environment variables in `data
 - `PORT`: Port for the API service (default: 3001)
 - `COLLECTION_INTERVAL`: Interval for data collection in seconds (default: 5)
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`: Database connection parameters
-- `OLLAMA_HOST`: Host for the Ollama service (default: http://localhost:11434)
+- `OLLAMA_HOST`: Host for the Ollama service (default: http://localhost:11435)
 - `OLLAMA_MODEL`: Model to use for LLM analysis (default: llama2)
 
 #### Database
